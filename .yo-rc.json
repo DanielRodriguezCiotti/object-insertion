@@ -1,0 +1,19 @@
+{
+  "generator-sicarator": {
+    "promptValues": {
+      "authorName": "Daniel Rodriguez Ciotti",
+      "authorEmail": "daniel.rodriguezciotti@sicara.com",
+      "ci": ".github",
+      "includeApi": false,
+      "includeDvc": true,
+      "dvcRemoteType": "gs",
+      "includeStreamlit": true,
+      "includeDvcStreamlitUtils": true,
+      "includeDvcStreamlitExample": true
+    },
+    "projectName": "object-insertion",
+    "projectSlug": "object-insertion",
+    "projectDescription": "Project generated with Sicarator",
+    "dvcRemoteBucketName": "object-insertion-dvc-remote"
+  }
+}

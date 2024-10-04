@@ -1,0 +1,3 @@
+[submodule "anydoor"]
+	path = anydoor
+	url = git@github.com:ali-vilab/AnyDoor.git

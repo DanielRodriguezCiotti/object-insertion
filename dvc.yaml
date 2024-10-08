@@ -15,3 +15,11 @@ stages:
       - data/LPIPS_dummpy_generation_all.txt
       - data/LPIPS_dummpy_generation.txt
 
+  dummy_compute_fid:
+    cmd: python -m pytorch_fid data/vton_subset/image data/vton_subset_generation | grep 'FID:' | awk '{print $2}' > data/FID_dummpy_generation.txt
+    deps:
+      - data/vton_subset/image
+      - data/vton_subset_generation
+    outs:
+      - data/FID_dummpy_generation.txt
+

@@ -23,3 +23,10 @@ stages:
     outs:
       - data/FID_dummpy_generation.txt
 
+  dummy_compute_ssim:
+    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_subset/image -d1 data/vton_subset_generation -o data/SSIM_dummy_generation.txt
+    deps:
+      - data/vton_subset/image
+      - data/vton_subset_generation
+    outs:
+      - data/SSIM_dummy_generation.txt  

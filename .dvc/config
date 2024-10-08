@@ -1,4 +1,4 @@
 [core]
     remote = origin
 ['remote "origin"']
-    url = gs://object-insertion-dvc-remote
+    url = s3://virtual-try-on-anydoor/dvc-remotes/

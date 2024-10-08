@@ -1,0 +1,4 @@
+schema: '2.0'
+stages:
+  generate_random_number:
+    cmd: python src/scripts/generate_random_number.py --output-path data/generate_random_number/random_number.yaml

@@ -1,0 +1,17 @@
+stages:
+  dummy_image_generation:
+    cmd: poetry run python -m src.scripts.dummy_generation_script --input-folder data/vton_subset/image --output-folder data/vton_subset_generation
+    deps:
+      - data/vton_subset/image
+    outs:
+      - data/vton_subset_generation
+    
+  dummy_compute_lpips:
+    cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_subset/image -d1 data/vton_subset_generation -o data/LPIPS_dummpy_generation.txt
+    deps:
+      - data/vton_subset/image
+      - data/vton_subset_generation
+    outs:
+      - data/LPIPS_dummpy_generation_all.txt
+      - data/LPIPS_dummpy_generation.txt
+

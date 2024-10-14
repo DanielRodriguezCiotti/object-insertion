@@ -2,3 +2,79 @@ schema: '2.0'
 stages:
   generate_random_number:
     cmd: python src/scripts/generate_random_number.py --output-path data/generate_random_number/random_number.yaml
+  dummy_image_generation:
+    cmd: poetry run python -m src.scripts.dummy_generation_script --input-folder data/vton_subset/image
+      --output-folder data/vton_subset_generation
+    deps:
+    - path: data/vton_subset/image
+      hash: md5
+      md5: 05a9d6e2008c65f63663b17d718b4242.dir
+      size: 482420
+      nfiles: 5
+    outs:
+    - path: data/vton_subset_generation
+      hash: md5
+      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
+      size: 2907629
+      nfiles: 5
+  dummy_compute_lpips:
+    cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_subset/image
+      -d1 data/vton_subset_generation -o data/LPIPS_dummpy_generation.txt
+    deps:
+    - path: data/vton_subset/image
+      hash: md5
+      md5: 05a9d6e2008c65f63663b17d718b4242.dir
+      size: 482420
+      nfiles: 5
+    - path: data/vton_subset_generation
+      hash: md5
+      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
+      size: 2907629
+      nfiles: 5
+    outs:
+    - path: data/LPIPS_dummpy_generation.txt
+      hash: md5
+      md5: f068325122218175aa62d5251f96a4d4
+      size: 60
+    - path: data/LPIPS_dummpy_generation_all.txt
+      hash: md5
+      md5: 568bee22b8daa0288fcb29f7760d5b92
+      size: 115
+  dummy_compute_fid:
+    cmd: python -m pytorch_fid data/vton_subset/image data/vton_subset_generation
+      | grep 'FID:' | awk '{print $2}' > data/FID_dummpy_generation.txt
+    deps:
+    - path: data/vton_subset/image
+      hash: md5
+      md5: 05a9d6e2008c65f63663b17d718b4242.dir
+      size: 482420
+      nfiles: 5
+    - path: data/vton_subset_generation
+      hash: md5
+      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
+      size: 2907629
+      nfiles: 5
+    outs:
+    - path: data/FID_dummpy_generation.txt
+      hash: md5
+      md5: 29b503eae62bc851a48c8efa7c2b2f30
+      size: 19
+  dummy_compute_ssim:
+    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_subset/image
+      -d1 data/vton_subset_generation -o data/SSIM_dummy_generation.txt
+    deps:
+    - path: data/vton_subset/image
+      hash: md5
+      md5: 05a9d6e2008c65f63663b17d718b4242.dir
+      size: 482420
+      nfiles: 5
+    - path: data/vton_subset_generation
+      hash: md5
+      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
+      size: 2907629
+      nfiles: 5
+    outs:
+    - path: data/SSIM_dummy_generation.txt
+      hash: md5
+      md5: 1d06e35c028d527933aa557c96b539f0
+      size: 150

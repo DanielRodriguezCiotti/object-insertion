@@ -16,7 +16,3 @@ from src.constants import PARAMETERS_YAML_PATH
 
 with Path.open(PARAMETERS_YAML_PATH) as parameters_yaml:
     PARAMETERS = yaml.safe_load(parameters_yaml)
-
-# Used as an example param for the DVC pipeline and the DVC + Streamlit example page.
-# TODO: remove this parameter if you don't need it.
-RANDOM_SEED = PARAMETERS["random_seed"]

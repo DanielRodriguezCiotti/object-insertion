@@ -22,7 +22,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 # Open the output file for writing results
-with open(args.out, "w") as f:
+with open(args.out.replace(".txt", "_all.txt"), "w") as f:
     files = os.listdir(args.dir0)
 
     distances = []
@@ -43,7 +43,7 @@ with open(args.out, "w") as f:
             distances.append(ssim_value)
 
 # Aggregate the results and write to another file
-with open(args.out.replace(".txt", "_agg.txt"), "w") as f_agg:
+with open(args.out, "w") as f_agg:
     f_agg.writelines("Aggregated results:\n")
     f_agg.writelines(f"Mean: {sum(distances) / len(distances):.6f}\n")
     f_agg.writelines(f"Max: {max(distances):.6f}\n")

@@ -1,0 +1,6 @@
+outs:
+- md5: b835ec74f70bc41baf54912ff6719e66.dir
+  size: 72209849
+  nfiles: 549
+  hash: md5
+  path: vton_gt

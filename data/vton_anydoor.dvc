@@ -1,0 +1,6 @@
+outs:
+- md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+  size: 63570256
+  nfiles: 549
+  hash: md5
+  path: vton_anydoor

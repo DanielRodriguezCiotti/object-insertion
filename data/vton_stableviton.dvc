@@ -1,0 +1,6 @@
+outs:
+- md5: 029691523e24a1721b34d61c762a2c87.dir
+  size: 80544333
+  nfiles: 2032
+  hash: md5
+  path: vton_stableviton

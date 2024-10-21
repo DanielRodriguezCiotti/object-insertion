@@ -12,6 +12,8 @@ tqdm = "^4.66.5"
 pytorch-fid = "^0.3.0"
 scikit-image = "^0.24.0"
 pillow = "^10.4.0"
+omegaconf = "^2.3.0"
+torch-fidelity = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 dvc = {extras = ["gs"], version = "^3.28.0"}

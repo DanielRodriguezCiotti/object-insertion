@@ -1,33 +1,38 @@
+vars:
+  - methods : ['anydoor','catdm', 'stableviton']
+
 stages:
-  # dummy_image_generation:
-  #   cmd: poetry run python -m src.scripts.dummy_generation_script --input-folder data/vton_subset/image --output-folder data/vton_subset_generation
-  #   deps:
-  #     - data/vton_subset/image
-  #   outs:
-  #     - data/vton_subset_generation
-    
-  compute_anydoor_lpips:
-    cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_gt -d1 data/vton_anydoor -o data/LPIPS_anydoor.txt
-    deps:
-      - data/vton_gt
-      - data/vton_anydoor
-    outs:
-      - data/LPIPS_anydoor_all.txt
-      - data/LPIPS_anydoor.txt
 
-  compute_anydoor_fid:
-    cmd: python -m pytorch_fid data/vton_gt data/vton_anydoor | grep 'FID:' | awk '{print $2}' > data/FID_anydoor.txt
-    deps:
-      - data/vton_gt
-      - data/vton_anydoor
-    outs:
-      - data/FID_anydoor.txt
+  compute_lpips:
+    foreach: ${methods}
+    do:
+      cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_gt -d1 data/vton_${item} -o data/metrics_${item}/LPIPS_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/LPIPS_${item}_all.txt
+        - data/metrics_${item}/LPIPS_${item}.txt
 
-  compute_anydoor_ssim:
-    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_gt -d1 data/vton_anydoor -o data/SSIM_anydoor.txt
-    deps:
-      - data/vton_gt
-      - data/vton_anydoor
-    outs:
-      - data/SSIM_anydoor_all.txt 
-      - data/SSIM_anydoor.txt  
+  compute_fid:
+    foreach: ${methods}
+    do:
+      cmd: python -m pytorch_fid data/vton_gt data/vton_${item} | grep 'FID:' | awk '{print $2}' > data/metrics_${item}/FID_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/FID_${item}.txt
+
+  compute_ssim:
+    foreach: ${methods}
+    do:
+      cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_gt -d1 data/vton_${item} -o data/metrics_${item}/SSIM_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/SSIM_${item}_all.txt 
+        - data/metrics_${item}/SSIM_${item}.txt  
+  
+

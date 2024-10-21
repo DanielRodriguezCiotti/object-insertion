@@ -1,6 +1,0 @@
-outs:
-- md5: 14e35db954f5bc219972bc849f6a4bdd.dir
-  size: 1638888
-  nfiles: 50
-  hash: md5
-  path: vton_subset

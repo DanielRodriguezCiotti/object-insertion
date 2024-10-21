@@ -1,3 +1,11 @@
 /vton_gt
 /vton_anydoor
-/vton_subset
+/vton_stableviton
+/vton_catdm
+/metrics_anydoor
+/metrics_stableviton
+/metrics_catdm
+
+
+
+/comparison_images

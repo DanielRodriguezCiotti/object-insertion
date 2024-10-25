@@ -25,4 +25,4 @@ __pycache__/
 model_ckpts/
 
 # data
-data/
+data/*.txt

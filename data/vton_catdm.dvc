@@ -1,0 +1,6 @@
+outs:
+- md5: af48a013ecb7f831c5f5b7a7668d0837.dir
+  size: 88475289
+  nfiles: 2032
+  hash: md5
+  path: vton_catdm

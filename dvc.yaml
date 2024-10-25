@@ -1,32 +1,57 @@
+vars:
+  - methods : ['anydoor','catdm', 'stableviton']
+
 stages:
-  dummy_image_generation:
-    cmd: poetry run python -m src.scripts.dummy_generation_script --input-folder data/vton_subset/image --output-folder data/vton_subset_generation
-    deps:
-      - data/vton_subset/image
-    outs:
-      - data/vton_subset_generation
-    
-  dummy_compute_lpips:
-    cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_subset/image -d1 data/vton_subset_generation -o data/LPIPS_dummpy_generation.txt
-    deps:
-      - data/vton_subset/image
-      - data/vton_subset_generation
-    outs:
-      - data/LPIPS_dummpy_generation_all.txt
-      - data/LPIPS_dummpy_generation.txt
 
-  dummy_compute_fid:
-    cmd: python -m pytorch_fid data/vton_subset/image data/vton_subset_generation | grep 'FID:' | awk '{print $2}' > data/FID_dummpy_generation.txt
-    deps:
-      - data/vton_subset/image
-      - data/vton_subset_generation
-    outs:
-      - data/FID_dummpy_generation.txt
+  compute_lpips:
+    foreach: ${methods}
+    do:
+      cmd: poetry run python -m src.scripts.compute_lpips -d0 data/vton_gt -d1 data/vton_${item} -o data/metrics_${item}/LPIPS_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/LPIPS_${item}_all.txt
+        - data/metrics_${item}/LPIPS_${item}.txt
 
-  dummy_compute_ssim:
-    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_subset/image -d1 data/vton_subset_generation -o data/SSIM_dummy_generation.txt
+  compute_fid:
+    foreach: ${methods}
+    do:
+      cmd: poetry run python -m pytorch_fid data/vton_gt data/vton_${item} | grep 'FID:' | awk '{print $2}' > data/metrics_${item}/FID_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/FID_${item}.txt
+
+  compute_kid:
+    foreach: ${methods}
+    do:
+      cmd: poetry run fidelity --kid --input1 data/vton_gt --input2 data/vton_${item}| grep 'kernel_inception_distance_mean\|kernel_inception_distance_std' > data/metrics_${item}/KID_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/KID_${item}.txt
+
+  compute_ssim:
+    foreach: ${methods}
+    do:
+      cmd: poetry run python -m src.scripts.compute_ssim -d0 data/vton_gt -d1 data/vton_${item} -o data/metrics_${item}/SSIM_${item}.txt
+      deps:
+        - data/vton_gt
+        - data/vton_${item}
+      outs:
+        - data/metrics_${item}/SSIM_${item}_all.txt 
+        - data/metrics_${item}/SSIM_${item}.txt  
+  
+  concat_images_for_comparison:
+    cmd: poetry run python -m src.scripts.concat_images -c config/comparison.yaml -o data/comparison_images
     deps:
-      - data/vton_subset/image
-      - data/vton_subset_generation
+      - config/comparison.yaml
+      - data/vton_gt
+      - data/vton_anydoor
+      - data/vton_catdm
+      - data/vton_stableviton
     outs:
-      - data/SSIM_dummy_generation.txt  
+      - data/comparison_images

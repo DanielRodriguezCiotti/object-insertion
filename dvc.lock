@@ -14,8 +14,8 @@ stages:
     outs:
     - path: data/vton_subset_generation
       hash: md5
-      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
-      size: 2907629
+      md5: 19e6eb764fda9adccb94f0fae77f850e.dir
+      size: 2908076
       nfiles: 5
   dummy_compute_lpips:
     cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_subset/image
@@ -41,40 +41,109 @@ stages:
       md5: 568bee22b8daa0288fcb29f7760d5b92
       size: 115
   dummy_compute_fid:
-    cmd: python -m pytorch_fid data/vton_subset/image data/vton_subset_generation
-      | grep 'FID:' | awk '{print $2}' > data/FID_dummpy_generation.txt
+    cmd: python -m pytorch_fid data/vton_gt data/vton_anydoor | grep 'FID:' | awk
+      '{print $2}' > data/FID_anydoor.txt
     deps:
-    - path: data/vton_subset/image
+    - path: data/vton_anydoor
       hash: md5
-      md5: 05a9d6e2008c65f63663b17d718b4242.dir
-      size: 482420
-      nfiles: 5
-    - path: data/vton_subset_generation
+      md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+      size: 63570256
+      nfiles: 549
+    - path: data/vton_gt
       hash: md5
-      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
-      size: 2907629
-      nfiles: 5
+      md5: b835ec74f70bc41baf54912ff6719e66.dir
+      size: 72209849
+      nfiles: 549
     outs:
-    - path: data/FID_dummpy_generation.txt
+    - path: data/FID_anydoor.txt
       hash: md5
-      md5: 29b503eae62bc851a48c8efa7c2b2f30
+      md5: a705b50f8b53a3a981ce82b78f7ebcc5
       size: 19
   dummy_compute_ssim:
-    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_subset/image
-      -d1 data/vton_subset_generation -o data/SSIM_dummy_generation.txt
+    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_gt -d1 data/vton_anydoor
+      -o data/SSIM_anydoor.txt
     deps:
-    - path: data/vton_subset/image
+    - path: data/vton_anydoor
       hash: md5
-      md5: 05a9d6e2008c65f63663b17d718b4242.dir
-      size: 482420
-      nfiles: 5
-    - path: data/vton_subset_generation
+      md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+      size: 63570256
+      nfiles: 549
+    - path: data/vton_gt
       hash: md5
-      md5: c31ecfb5f6aa49d401e76d566fecc2f0.dir
-      size: 2907629
-      nfiles: 5
+      md5: b835ec74f70bc41baf54912ff6719e66.dir
+      size: 72209849
+      nfiles: 549
     outs:
-    - path: data/SSIM_dummy_generation.txt
+    - path: data/SSIM_anydoor.txt
       hash: md5
-      md5: 1d06e35c028d527933aa557c96b539f0
-      size: 150
+      md5: b493c30d460364eb857a81b0270b48cb
+      size: 63
+    - path: data/SSIM_anydoor_all.txt
+      hash: md5
+      md5: e9f82d04d4c2a9a8854504bf13fc4da4
+      size: 16470
+  compute_anydoor_lpips:
+    cmd: poetry run python src/scripts/compute_lpips.py -d0 data/vton_gt -d1 data/vton_anydoor
+      -o data/LPIPS_anydoor.txt
+    deps:
+    - path: data/vton_anydoor
+      hash: md5
+      md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+      size: 63570256
+      nfiles: 549
+    - path: data/vton_gt
+      hash: md5
+      md5: b835ec74f70bc41baf54912ff6719e66.dir
+      size: 72209849
+      nfiles: 549
+    outs:
+    - path: data/LPIPS_anydoor.txt
+      hash: md5
+      md5: 9369221d5ff62a35ea7c75a9902467a9
+      size: 60
+    - path: data/LPIPS_anydoor_all.txt
+      hash: md5
+      md5: 5029091462629b47e0b3dd30c1fa1144
+      size: 12627
+  compute_anydoor_fid:
+    cmd: python -m pytorch_fid data/vton_gt data/vton_anydoor | grep 'FID:' | awk
+      '{print $2}' > data/FID_anydoor.txt
+    deps:
+    - path: data/vton_anydoor
+      hash: md5
+      md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+      size: 63570256
+      nfiles: 549
+    - path: data/vton_gt
+      hash: md5
+      md5: b835ec74f70bc41baf54912ff6719e66.dir
+      size: 72209849
+      nfiles: 549
+    outs:
+    - path: data/FID_anydoor.txt
+      hash: md5
+      md5: a705b50f8b53a3a981ce82b78f7ebcc5
+      size: 19
+  compute_anydoor_ssim:
+    cmd: poetry run python src/scripts/compute_ssim.py -d0 data/vton_gt -d1 data/vton_anydoor
+      -o data/SSIM_anydoor.txt
+    deps:
+    - path: data/vton_anydoor
+      hash: md5
+      md5: f3e7d3695131a6ca3cbfd7f56f3349c2.dir
+      size: 63570256
+      nfiles: 549
+    - path: data/vton_gt
+      hash: md5
+      md5: b835ec74f70bc41baf54912ff6719e66.dir
+      size: 72209849
+      nfiles: 549
+    outs:
+    - path: data/SSIM_anydoor.txt
+      hash: md5
+      md5: b493c30d460364eb857a81b0270b48cb
+      size: 63
+    - path: data/SSIM_anydoor_all.txt
+      hash: md5
+      md5: e9f82d04d4c2a9a8854504bf13fc4da4
+      size: 16470

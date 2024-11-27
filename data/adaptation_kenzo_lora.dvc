@@ -1,0 +1,6 @@
+outs:
+- md5: d02b59270133c28e5ea7f06e11b95721.dir
+  size: 1011793
+  nfiles: 22
+  hash: md5
+  path: adaptation_kenzo_lora

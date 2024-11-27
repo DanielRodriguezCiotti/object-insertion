@@ -1,5 +1,6 @@
 vars:
   - methods : ['anydoor','catdm', 'stableviton']
+  - loras : ['nolora', 'kenzo_lora', 'zara_lora']
 
 stages:
 
@@ -55,3 +56,48 @@ stages:
       - data/vton_stableviton
     outs:
       - data/comparison_images
+
+
+
+
+  compute_lpips_loras:
+    foreach: ${loras}
+    do:
+      cmd: python -m src.scripts.compute_lpips -d0 data/adaptation_subset -d1 data/adaptation_${item} -o data/metrics_${item}/LPIPS_${item}.txt
+      deps:
+        - data/adaptation_subset
+        - data/adaptation_${item}
+      outs:
+        - data/metrics_${item}/LPIPS_${item}_all.txt
+        - data/metrics_${item}/LPIPS_${item}.txt
+
+  compute_fid_loras:
+    foreach: ${loras}
+    do:
+      cmd: python -m pytorch_fid data/adaptation_subset data/adaptation_${item} | grep 'FID:' | awk '{print $2}' > data/metrics_${item}/FID_${item}.txt
+      deps:
+        - data/adaptation_subset
+        - data/adaptation_${item}
+      outs:
+        - data/metrics_${item}/FID_${item}.txt
+
+  compute_kid_loras:
+    foreach: ${loras}
+    do:
+      cmd: fidelity --kid --input1 data/adaptation_subset --input2 data/adaptation_${item}| grep 'kernel_inception_distance_mean\|kernel_inception_distance_std' > data/metrics_${item}/KID_${item}.txt
+      deps:
+        - data/adaptation_subset
+        - data/adaptation_${item}
+      outs:
+        - data/metrics_${item}/KID_${item}.txt
+
+  compute_ssim_loras:
+    foreach: ${loras}
+    do:
+      cmd: python -m src.scripts.compute_ssim -d0 data/adaptation_subset -d1 data/adaptation_${item} -o data/metrics_${item}/SSIM_${item}.txt
+      deps:
+        - data/adaptation_subset
+        - data/adaptation_${item}
+      outs:
+        - data/metrics_${item}/SSIM_${item}_all.txt 
+        - data/metrics_${item}/SSIM_${item}.txt  

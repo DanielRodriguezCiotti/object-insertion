@@ -147,3 +147,72 @@ stages:
       hash: md5
       md5: e9f82d04d4c2a9a8854504bf13fc4da4
       size: 16470
+  compute_lpips_loras@nolora:
+    cmd: python -m src.scripts.compute_lpips -d0 data/adaptation_subset -d1 data/adaptation_nolora
+      -o data/metrics_nolora/LPIPS_nolora.txt
+    deps:
+    - path: data/adaptation_nolora
+      hash: md5
+      md5: 4b6701d354df22dad226ed8f1f892917.dir
+      size: 1015411
+      nfiles: 22
+    - path: data/adaptation_subset
+      hash: md5
+      md5: 2f6037fa4d4d5e2478924cb22843f988.dir
+      size: 2846141
+      nfiles: 22
+    outs:
+    - path: data/metrics_nolora/LPIPS_nolora.txt
+      hash: md5
+      md5: 5d2524b28ef38450ede21bfd9b87d037
+      size: 63
+    - path: data/metrics_nolora/LPIPS_nolora_all.txt
+      hash: md5
+      md5: c404739e29087991809f142a0139ff4d
+      size: 682
+  compute_lpips_loras@zara_lora:
+    cmd: python -m src.scripts.compute_lpips -d0 data/adaptation_subset -d1 data/adaptation_zara_lora
+      -o data/metrics_zara_lora/LPIPS_zara_lora.txt
+    deps:
+    - path: data/adaptation_subset
+      hash: md5
+      md5: 2f6037fa4d4d5e2478924cb22843f988.dir
+      size: 2846141
+      nfiles: 22
+    - path: data/adaptation_zara_lora
+      hash: md5
+      md5: e6640a266d8d508046e8b133e33ef446.dir
+      size: 1004587
+      nfiles: 22
+    outs:
+    - path: data/metrics_zara_lora/LPIPS_zara_lora.txt
+      hash: md5
+      md5: 87db1f98b04ae89d59c7820294941550
+      size: 63
+    - path: data/metrics_zara_lora/LPIPS_zara_lora_all.txt
+      hash: md5
+      md5: 18ebb5153ec5a05ac726448a3f424847
+      size: 682
+  compute_lpips_loras@kenzo_lora:
+    cmd: python -m src.scripts.compute_lpips -d0 data/adaptation_subset -d1 data/adaptation_kenzo_lora
+      -o data/metrics_kenzo_lora/LPIPS_kenzo_lora.txt
+    deps:
+    - path: data/adaptation_kenzo_lora
+      hash: md5
+      md5: d02b59270133c28e5ea7f06e11b95721.dir
+      size: 1011793
+      nfiles: 22
+    - path: data/adaptation_subset
+      hash: md5
+      md5: 2f6037fa4d4d5e2478924cb22843f988.dir
+      size: 2846141
+      nfiles: 22
+    outs:
+    - path: data/metrics_kenzo_lora/LPIPS_kenzo_lora.txt
+      hash: md5
+      md5: 452c53224b84833f3e2bac0598f5a5d4
+      size: 63
+    - path: data/metrics_kenzo_lora/LPIPS_kenzo_lora_all.txt
+      hash: md5
+      md5: d300ff0a29abf82998722f2452aac17a
+      size: 682

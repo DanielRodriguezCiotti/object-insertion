@@ -1,0 +1,6 @@
+outs:
+- md5: e6640a266d8d508046e8b133e33ef446.dir
+  size: 1004587
+  nfiles: 22
+  hash: md5
+  path: adaptation_zara_lora

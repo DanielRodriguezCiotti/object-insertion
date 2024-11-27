@@ -1,0 +1,6 @@
+outs:
+- md5: 2f6037fa4d4d5e2478924cb22843f988.dir
+  size: 2846141
+  nfiles: 22
+  hash: md5
+  path: adaptation_subset

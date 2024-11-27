@@ -1,0 +1,6 @@
+outs:
+- md5: 4b6701d354df22dad226ed8f1f892917.dir
+  size: 1015411
+  nfiles: 22
+  hash: md5
+  path: adaptation_nolora

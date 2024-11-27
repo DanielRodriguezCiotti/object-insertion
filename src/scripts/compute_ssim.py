@@ -65,6 +65,8 @@ def main():
     )
 
     args = parser.parse_args()
+    results_folder = "/".join(args.out.split("/")[:-1])
+    os.makedirs(results_folder, exist_ok=True)
 
     compute_ssim(args.out, args.dir0, args.dir1)
 
